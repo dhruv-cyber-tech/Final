@@ -9,28 +9,22 @@ public class PhonePanel extends JPanel {
 
     private Image phoneImage;
 
-    // Constructor that accepts your main panel
-    public PhonePanel(JPanel mainPanel) {
+    public PhonePanel() { // The constructor is now empty
         setLayout(null);
-        setBackground(Color.BLACK);
+        setBackground(Color.DARK_GRAY);
 
-        // Load the phone overlay image from the resources folder
         try {
-            phoneImage = ImageIO.read(getClass().getResource("resources/images/phone-mockup.png"));
-        } catch (IOException e) {
+            phoneImage = ImageIO.read(getClass().getResource("/resources/images/phone-mockup.png"));
+        } catch (IOException | IllegalArgumentException e) {
             System.out.println("Error loading phone image: " + e.getMessage());
+            e.printStackTrace();
         }
-
-        // Place your app's main panel inside the phone frame
-        mainPanel.setBounds(30, 60, 362, 630);
-        add(mainPanel);
-
     }
 
-    // Draw the background (phone mockup image)
     @Override
     protected void paintChildren(Graphics g) {
         super.paintChildren(g);
+
         if (phoneImage != null) {
             g.drawImage(phoneImage, 0, 0, getWidth(), getHeight(), this);
         }

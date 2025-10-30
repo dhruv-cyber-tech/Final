@@ -1,73 +1,68 @@
 package com.fitforge.auth;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
 import com.fitforge.model.UserManager;
+import java.awt.*;
+import javax.swing.*;
 
-public class LoginPanel extends Panel {
+public class LoginPanel extends JPanel { // Must be JPanel
 
     private final UserManager userManager;
     private final CardLayout card;
-    private final Panel mainPanel;
+    private final JPanel mainPanel; // Must be JPanel
 
-    public LoginPanel(UserManager userManager, CardLayout card, Panel mainPanel) {
+    public LoginPanel(UserManager userManager, CardLayout card, JPanel mainPanel) { // Must be JPanel
         this.userManager = userManager;
         this.card = card;
         this.mainPanel = mainPanel;
         setLayout(null);
         setBackground(new Color(69, 51, 181));
 
-        // Title
-        Label titleLabel = new Label("LOGIN", Label.CENTER);
+        JLabel titleLabel = new JLabel("LOGIN", JLabel.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 28));
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setBounds(50, 100, 260, 50);
         add(titleLabel);
 
-        // Username
-        Label userLabel = new Label("Username:");
+        JLabel userLabel = new JLabel("Username:");
         userLabel.setFont(new Font("Arial", Font.BOLD, 14));
         userLabel.setForeground(Color.WHITE);
         userLabel.setBounds(50, 170, 80, 25);
         add(userLabel);
 
-        TextField userField = new TextField();
+        JTextField userField = new JTextField();
         userField.setFont(new Font("Arial", Font.PLAIN, 14));
         userField.setBounds(50, 200, 260, 35);
         userField.setBackground(new Color(240, 240, 240));
         add(userField);
 
-        // Password
-        Label passLabel = new Label("Password:");
+        JLabel passLabel = new JLabel("Password:");
         passLabel.setFont(new Font("Arial", Font.BOLD, 14));
         passLabel.setForeground(Color.WHITE);
         passLabel.setBounds(50, 250, 80, 25);
         add(passLabel);
 
-        TextField passField = new TextField();
+        JPasswordField passField = new JPasswordField();
         passField.setFont(new Font("Arial", Font.PLAIN, 14));
-        passField.setEchoChar('*');
         passField.setBounds(50, 280, 260, 35);
         passField.setBackground(new Color(240, 240, 240));
         add(passField);
 
-        // Message label
-        Label messageLabel = new Label("", Label.CENTER);
+        JLabel messageLabel = new JLabel("", JLabel.CENTER);
         messageLabel.setFont(new Font("Arial", Font.PLAIN, 12));
         messageLabel.setForeground(new Color(255, 100, 100));
         messageLabel.setBounds(50, 320, 260, 30);
         add(messageLabel);
 
-        // Login Button
-        Button loginButton = new Button("Login");
+        JButton loginButton = new JButton("Login");
         loginButton.setFont(new Font("Arial", Font.BOLD, 14));
         loginButton.setBounds(80, 365, 100, 35);
         loginButton.setBackground(new Color(34, 139, 34));
         loginButton.setForeground(Color.WHITE);
+        loginButton.setFocusPainted(false);
+        loginButton.setBorderPainted(false);
         loginButton.addActionListener(e -> {
             String username = userField.getText().trim();
-            String password = passField.getText().trim();
+            String password = new String(passField.getPassword()).trim();
 
             if (userManager.validateUser(username, password)) {
                 messageLabel.setForeground(new Color(100, 255, 100));
@@ -87,20 +82,20 @@ public class LoginPanel extends Panel {
         });
         add(loginButton);
 
-        // Register Button
-        Button registerButton = new Button("Register");
+        JButton registerButton = new JButton("Register");
         registerButton.setFont(new Font("Arial", Font.BOLD, 14));
         registerButton.setBounds(180, 365, 100, 35);
         registerButton.setBackground(new Color(70, 130, 180));
         registerButton.setForeground(Color.WHITE);
+        registerButton.setFocusPainted(false);
+        registerButton.setBorderPainted(false);
         registerButton.addActionListener(e -> {
             card.show(mainPanel, "register");
             messageLabel.setText("");
         });
         add(registerButton);
 
-        // Demo Info
-        Label infoLabel = new Label("Demo: dhruv/dhruv123", Label.CENTER);
+        JLabel infoLabel = new JLabel("Demo: dhruv/dhruv123", JLabel.CENTER);
         infoLabel.setFont(new Font("Arial", Font.ITALIC, 11));
         infoLabel.setForeground(new Color(200, 200, 200));
         infoLabel.setBounds(50, 410, 260, 20);
