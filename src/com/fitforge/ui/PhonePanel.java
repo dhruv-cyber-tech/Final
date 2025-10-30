@@ -1,6 +1,7 @@
 package com.fitforge.ui;
 
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -9,15 +10,14 @@ public class PhonePanel extends JPanel {
 
     private Image phoneImage;
 
-    public PhonePanel() { // The constructor is now empty
+    public PhonePanel() {
         setLayout(null);
-        setBackground(Color.DARK_GRAY);
+        setBackground(Color.BLACK);
 
         try {
-            phoneImage = ImageIO.read(getClass().getResource("/resources/images/phone-mockup.png"));
-        } catch (IOException | IllegalArgumentException e) {
+            phoneImage = ImageIO.read(new File("src/resources/images/phone-mockup.png"));
+        } catch (IOException e) {
             System.out.println("Error loading phone image: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 

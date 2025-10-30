@@ -1,6 +1,7 @@
 package com.fitforge.ui;
 
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,11 +13,9 @@ public class Screen1 extends JPanel {
     public Screen1() {
         setLayout(null);
         try {
-            // Note: The path is different here because it's loaded from App2
-            // This class isn't actually used by the final App2, which builds
-            // the intro screens manually. But if you were to use it:
-            background = ImageIO.read(getClass().getResource("/resources/images/first.png"));
-        } catch (IOException | IllegalArgumentException e) {
+            // ✅ Match same style as App2.java
+            background = ImageIO.read(new File("src/resources/images/first.png"));
+        } catch (IOException e) {
             System.out.println("Error loading Screen1 background: " + e.getMessage());
         }
 

@@ -1,11 +1,11 @@
 package com.fitforge.ui;
 
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-// Use JPanel (Swing)
 public class Screen3 extends JPanel {
 
     private Image background;
@@ -13,13 +13,12 @@ public class Screen3 extends JPanel {
     public Screen3() {
         setLayout(null);
         try {
-            // Use getResource with an absolute path
-            background = ImageIO.read(getClass().getResource("/resources/images/third.png"));
-        } catch (IOException | IllegalArgumentException e) {
+            // ✅ Load image directly from source folder
+            background = ImageIO.read(new File("src/resources/images/third.png"));
+        } catch (IOException e) {
             System.out.println("Error loading Screen3 background: " + e.getMessage());
         }
 
-        // Use JLabel (Swing)
         JLabel label = new JLabel("Track Your Progress");
         label.setFont(new Font("Segoe UI", Font.BOLD, 22));
         label.setForeground(Color.WHITE);
@@ -27,10 +26,9 @@ public class Screen3 extends JPanel {
         add(label);
     }
 
-    // Override paintComponent for Swing
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g); // Call super
+        super.paintComponent(g);
         if (background != null) {
             g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
         }

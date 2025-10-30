@@ -9,6 +9,7 @@ import com.fitforge.ui.PhonePanel;
 import com.fitforge.ui.RoundButtonCanvas; // This is now our JComponent version
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -48,17 +49,17 @@ public class App2 {
         mainPanel.setOpaque(false); // Make it transparent so we can see PhonePanel's bg
 
         // --- LOAD IMAGES ---
-        Image img1 = null, img2 = null, img3 = null, img4 = null, img5 = null;
+        // --- LOAD IMAGES ---
+        Image img1 = null, img2 = null, img3 = null, img4 = null, img5 = null, phoneImg = null;
         try {
-            img1 = ImageIO.read(getClass().getResource("C:\\Users\\Dell\\Desktop\\Final\\resources\\images\\first.jpg"));
-            img2 = ImageIO.read(getClass().getResource("C:\\Users\\Dell\\Desktop\\Final\\resources\\images\\second.jpg"));
-            img3 = ImageIO.read(getClass().getResource("C:\\Users\\Dell\\Desktop\\Final\\resources\\images\\third.jpg"));
-            img4 = ImageIO.read(getClass().getResource("C:\\Users\\Dell\\Desktop\\Final\\resources\\images\\four.jpg"));
-            img5 = ImageIO.read(getClass().getResource("C:\\Users\\Dell\\Desktop\\Final\\resources\\images\\fifth.png"));
-        } catch (IOException | IllegalArgumentException e) {
-            e.printStackTrace();
-            System.out.println("Error loading images: " + e.getMessage());
-            // You might want to show a JOptionPane error here
+            img1 = ImageIO.read(new File("src/resources/images/first.jpg"));
+            img2 = ImageIO.read(new File("src/resources/images/second.jpg"));
+            img3 = ImageIO.read(new File("src/resources/images/third.jpg"));
+            img4 = ImageIO.read(new File("src/resources/images/four.jpg"));
+            img5 = ImageIO.read(new File("src/resources/images/fifth.png"));
+            phoneImg = ImageIO.read(new File("src/resources/images/phone-mockup.png"));
+        } catch (IOException e) {
+            System.out.println("Error loading image: " + e.getMessage());
         }
 
         // --- CREATE SCREENS (Manually, like your pasted code) ---
@@ -68,7 +69,7 @@ public class App2 {
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 if (bg1 != null) {
-                    g.drawImage(bg1, 0, 0, getWidth(), getHeight(), this);
+                    g.drawImage(bg1, 0, 0, 360, 400, this);
                 }
             }
         };
@@ -92,7 +93,7 @@ public class App2 {
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 if (bg2 != null) {
-                    g.drawImage(bg2, 0, 0, getWidth(), getHeight(), this);
+                    g.drawImage(bg2, 0, 0, 360, 400, this);
                 }
             }
         };
@@ -115,7 +116,7 @@ public class App2 {
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 if (bg3 != null) {
-                    g.drawImage(bg3, 0, 0, getWidth(), getHeight(), this);
+                    g.drawImage(bg3, 0, 0, 360, 400, this);
                 }
             }
         };
@@ -139,7 +140,7 @@ public class App2 {
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 if (bg4 != null) {
-                    g.drawImage(bg4, 0, 0, getWidth(), getHeight(), this);
+                    g.drawImage(bg4, 0, 0, 360, 400, this);
                 }
             }
         };
@@ -162,7 +163,7 @@ public class App2 {
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 if (bg5 != null) {
-                    g.drawImage(bg5, 0, 0, getWidth(), getHeight(), this);
+                    g.drawImage(bg5, 0, 0, 360, 400, this);
                 }
             }
         };
