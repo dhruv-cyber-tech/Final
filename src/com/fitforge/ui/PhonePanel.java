@@ -11,8 +11,10 @@ public class PhonePanel extends JPanel {
     private Image phoneImage;
 
     public PhonePanel() {
-        setLayout(null);
-        setBackground(Color.BLACK);
+        // Make the panel transparent
+        setOpaque(false);
+        setBackground(Color.BLACK); // Fully transparent background
+        // We don't set layout or background anymore
 
         try {
             phoneImage = ImageIO.read(new File("src/resources/images/phone-mockup.png"));
@@ -21,12 +23,14 @@ public class PhonePanel extends JPanel {
         }
     }
 
+    // ✅ Changed from paintChildren to paintComponent
     @Override
-    protected void paintChildren(Graphics g) {
-        super.paintChildren(g);
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g); // Draw the transparent background
 
         if (phoneImage != null) {
-            g.drawImage(phoneImage, 0, 0, getWidth(), getHeight(), this);
+            // Draw the phone image on top
+            g.drawImage(phoneImage, 4, 0, getWidth() - 5, getHeight(), this);
         }
     }
 }

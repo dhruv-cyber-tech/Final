@@ -38,6 +38,13 @@ public class App2 {
         f.setSize(420, 750); // Set to phone mockup size
         f.setLocationRelativeTo(null);
         f.setResizable(false);
+        // Set a transparent background for the frame
+        f.setBackground(new Color(0, 0, 0, 0));
+
+        // --- CREATE LAYERED PANE ---
+        // This will hold our app and the phone overlay
+        JLayeredPane layeredPane = new JLayeredPane();
+        f.setContentPane(layeredPane); // Set it as the frame's main container
 
         // --- USER MANAGER ---
         userManager = new UserManager();
@@ -45,19 +52,19 @@ public class App2 {
         // --- MAIN APP PANEL (with CardLayout) ---
         card = new CardLayout();
         mainPanel = new JPanel(card); // This is a JPanel
-        mainPanel.setBounds(30, 60, 362, 630);
-        mainPanel.setOpaque(false); // Make it transparent so we can see PhonePanel's bg
+        // Position the app panel to fit *inside* the phone mockup
+        mainPanel.setBounds(30, 20, 368, 717);
+        mainPanel.setOpaque(false); // Make it transparent
 
         // --- LOAD IMAGES ---
-        // --- LOAD IMAGES ---
-        Image img1 = null, img2 = null, img3 = null, img4 = null, img5 = null, phoneImg = null;
+        Image img1 = null, img2 = null, img3 = null, img4 = null, img5 = null;
         try {
             img1 = ImageIO.read(new File("src/resources/images/first.jpg"));
             img2 = ImageIO.read(new File("src/resources/images/second.jpg"));
             img3 = ImageIO.read(new File("src/resources/images/third.jpg"));
             img4 = ImageIO.read(new File("src/resources/images/four.jpg"));
             img5 = ImageIO.read(new File("src/resources/images/fifth.png"));
-            phoneImg = ImageIO.read(new File("src/resources/images/phone-mockup.png"));
+            // phoneImg = ImageIO.read(new File("src/resources/images/phone-mockup.png"));
         } catch (IOException e) {
             System.out.println("Error loading image: " + e.getMessage());
         }
@@ -66,10 +73,12 @@ public class App2 {
         // Screen 1
         final Image bg1 = img1;
         JPanel screen1 = new JPanel(null) {
+            @Override
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 if (bg1 != null) {
-                    g.drawImage(bg1, 0, 0, 360, 400, this);
+                    // Adjusted size to fit the panel
+                    g.drawImage(bg1, 0, 0, 362, 400, this);
                 }
             }
         };
@@ -81,6 +90,7 @@ public class App2 {
         RoundButtonCanvas next1 = new RoundButtonCanvas("Next ⏭");
         next1.setBounds(150, 540, 60, 60);
         next1.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent e) {
                 card.show(mainPanel, "screen2");
             }
@@ -90,10 +100,11 @@ public class App2 {
         // Screen 2
         final Image bg2 = img2;
         JPanel screen2 = new JPanel(null) {
+            @Override
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 if (bg2 != null) {
-                    g.drawImage(bg2, 0, 0, 360, 400, this);
+                    g.drawImage(bg2, 0, 0, 362, 400, this);
                 }
             }
         };
@@ -104,6 +115,7 @@ public class App2 {
         RoundButtonCanvas next2 = new RoundButtonCanvas("Next ⏭");
         next2.setBounds(150, 540, 60, 60);
         next2.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent e) {
                 card.show(mainPanel, "screen3");
             }
@@ -113,10 +125,11 @@ public class App2 {
         // Screen 3
         final Image bg3 = img3;
         JPanel screen3 = new JPanel(null) {
+            @Override
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 if (bg3 != null) {
-                    g.drawImage(bg3, 0, 0, 360, 400, this);
+                    g.drawImage(bg3, 0, 0, 362, 400, this);
                 }
             }
         };
@@ -128,6 +141,7 @@ public class App2 {
         RoundButtonCanvas next3 = new RoundButtonCanvas("Next ⏭");
         next3.setBounds(150, 540, 60, 60);
         next3.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent e) {
                 card.show(mainPanel, "screen4");
             }
@@ -137,10 +151,11 @@ public class App2 {
         // Screen 4
         final Image bg4 = img4;
         JPanel screen4 = new JPanel(null) {
+            @Override
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 if (bg4 != null) {
-                    g.drawImage(bg4, 0, 0, 360, 400, this);
+                    g.drawImage(bg4, 0, 0, 362, 400, this);
                 }
             }
         };
@@ -151,6 +166,7 @@ public class App2 {
         RoundButtonCanvas next4 = new RoundButtonCanvas("Next ⏭");
         next4.setBounds(150, 540, 60, 60);
         next4.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent e) {
                 card.show(mainPanel, "screen5");
             }
@@ -160,10 +176,11 @@ public class App2 {
         // Screen 5
         final Image bg5 = img5;
         JPanel screen5 = new JPanel(null) {
+            @Override
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 if (bg5 != null) {
-                    g.drawImage(bg5, 0, 0, 360, 400, this);
+                    g.drawImage(bg5, 0, 0, 362, 400, this);
                 }
             }
         };
@@ -173,6 +190,7 @@ public class App2 {
         RoundButtonCanvas next5 = new RoundButtonCanvas("Login");
         next5.setBounds(150, 540, 60, 60);
         next5.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent e) {
                 card.show(mainPanel, "login");
             }
@@ -180,8 +198,6 @@ public class App2 {
         screen5.add(next5);
 
         // --- CREATE AUTH/DASHBOARD PANELS ---
-        // This is now correct! We pass a JPanel (mainPanel) to the constructors
-        // of our Swing-based LoginPanel and RegisterPanel.
         LoginPanel loginPanel = new LoginPanel(userManager, card, mainPanel);
         RegisterPanel registerPanel = new RegisterPanel(userManager, card, mainPanel);
         DashboardPanel dashboardPanel = new DashboardPanel();
@@ -196,12 +212,17 @@ public class App2 {
         mainPanel.add("register", registerPanel);
         mainPanel.add("dashboard", dashboardPanel);
 
-        // --- PHONE PANEL (The Frame's Content) ---
+        // --- PHONE PANEL (The Overlay) ---
         PhonePanel phonePanel = new PhonePanel();
-        phonePanel.add(mainPanel); // Add the app *inside* the phone
+        // Set it to fill the *entire frame*
+        phonePanel.setBounds(0, 0, 420, 750);
 
-        // Add the phone panel to the main frame
-        f.add(phonePanel);
+        // --- ADD PANELS TO LAYERED PANE ---
+        // Add the app panel to the bottom layer
+        layeredPane.add(mainPanel, JLayeredPane.DEFAULT_LAYER); // Layer 0
+        // Add the phone overlay panel to a higher layer (it will be drawn on top)
+        layeredPane.add(phonePanel, JLayeredPane.PALETTE_LAYER); // Layer 100
+
         f.setVisible(true);
     }
 

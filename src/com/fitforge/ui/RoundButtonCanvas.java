@@ -17,6 +17,8 @@ public class RoundButtonCanvas extends JComponent { // Must be JComponent
 
         setPreferredSize(new Dimension(80, 80));
 
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
