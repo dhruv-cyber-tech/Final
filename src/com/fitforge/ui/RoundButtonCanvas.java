@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class RoundButtonCanvas extends JComponent { // Must be JComponent
 
-    private String label;
+    private final String label;
     private Color backgroundColor;
     private Color pressedColor;
 
