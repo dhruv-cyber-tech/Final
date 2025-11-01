@@ -13,7 +13,7 @@ public class PhonePanel extends JPanel {
     public PhonePanel() {
         // Make the panel transparent
         setOpaque(false);
-        setBackground(Color.BLACK); // Fully transparent background
+        // setBackground(Color.BLACK); // Fully transparent background
         // We don't set layout or background anymore
 
         try {

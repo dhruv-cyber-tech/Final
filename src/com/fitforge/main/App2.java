@@ -3,7 +3,7 @@ package com.fitforge.main;
 import com.fitforge.auth.LoginPanel;
 import com.fitforge.auth.RegisterPanel;
 import com.fitforge.model.UserManager;
-import com.fitforge.ui.*;
+import com.fitforge.ui.*; // This now imports all UI panels
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -55,7 +55,8 @@ public class App2 {
 
         LoginPanel loginPanel = new LoginPanel(userManager, card, mainPanel);
         RegisterPanel registerPanel = new RegisterPanel(userManager, card, mainPanel);
-        DashboardPanel dashboardPanel = new DashboardPanel();
+        UserDetailsPanel userDetailsPanel = new UserDetailsPanel(card, mainPanel);
+        MainDashboardPanel mainDashboardPanel = new MainDashboardPanel(card, mainPanel); // <-- ADDED
 
         mainPanel.add(screen1, "screen1");
         mainPanel.add(screen2, "screen2");
@@ -64,7 +65,8 @@ public class App2 {
         mainPanel.add(screen5, "screen5");
         mainPanel.add(loginPanel, "login");
         mainPanel.add(registerPanel, "register");
-        mainPanel.add(dashboardPanel, "dashboard");
+        mainPanel.add(userDetailsPanel, "dashboard");
+        mainPanel.add(mainDashboardPanel, "home"); // <-- ADDED
 
         PhonePanel phonePanel = new PhonePanel();
         phonePanel.setBounds(0, 0, 420, 750);
