@@ -1,9 +1,11 @@
 package com.fitforge.main;
 
-import com.fitforge.auth.LoginPanel;
-import com.fitforge.auth.RegisterPanel;
+import com.fitforge.auth.*;
 import com.fitforge.model.UserManager;
-import com.fitforge.ui.*; // This now imports all UI panels
+import com.fitforge.ui.*;
+import com.fitforge.workout.HomeScreen;
+import com.fitforge.workout.LevelSelectionPanel;
+import com.fitforge.workout.WorkoutScreen;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +18,11 @@ public class App2 {
     JPanel mainPanel;
     CardLayout card;
     UserManager userManager;
+
+    // 2. Add fields for the new screens
+    LevelSelectionPanel levelSelectionPanel;
+    HomeScreen homeScreen;
+    WorkoutScreen workoutScreen;
 
     public App2() {
         f = new JFrame("FitForge App");
@@ -56,7 +63,11 @@ public class App2 {
         LoginPanel loginPanel = new LoginPanel(userManager, card, mainPanel);
         RegisterPanel registerPanel = new RegisterPanel(userManager, card, mainPanel);
         UserDetailsPanel userDetailsPanel = new UserDetailsPanel(card, mainPanel);
-        MainDashboardPanel mainDashboardPanel = new MainDashboardPanel(card, mainPanel); // <-- ADDED
+
+        homeScreen = new HomeScreen(this);
+        workoutScreen = new WorkoutScreen(this);
+
+        levelSelectionPanel = new LevelSelectionPanel(this);
 
         mainPanel.add(screen1, "screen1");
         mainPanel.add(screen2, "screen2");
@@ -66,7 +77,11 @@ public class App2 {
         mainPanel.add(loginPanel, "login");
         mainPanel.add(registerPanel, "register");
         mainPanel.add(userDetailsPanel, "dashboard");
-        mainPanel.add(mainDashboardPanel, "home"); // <-- ADDED
+
+        // 5. ADD the new screens to the CardLayout
+        mainPanel.add(homeScreen, "home"); // "home" now points to your workout list
+        mainPanel.add(workoutScreen, "workout"); // New card for the exercise screen
+        mainPanel.add(levelSelectionPanel, "levelSelect");
 
         PhonePanel phonePanel = new PhonePanel();
         phonePanel.setBounds(0, 0, 420, 750);
@@ -75,6 +90,29 @@ public class App2 {
         layeredPane.add(phonePanel, JLayeredPane.PALETTE_LAYER);
 
         f.setVisible(true);
+    }
+
+    // 6. ADD NAVIGATION METHODS
+    /**
+     * Called when user clicks a workout level on the HomeScreen. It loads the
+     * exercises and switches to the workout panel.
+     */
+    public void showLevelSelector(String bodyPart) {
+        levelSelectionPanel.setBodyPart(bodyPart); // Tell the panel which workout was chosen
+        card.show(mainPanel, "levelSelect");
+    }
+
+    public void openWorkoutWindow(String bodyPart, String level) {
+        workoutScreen.loadWorkout(bodyPart, level);
+        card.show(mainPanel, "workout");
+    }
+
+    /**
+     * Called when user presses "← Back" on the WorkoutScreen. It switches back
+     * to the main home (workout list) panel.
+     */
+    public void backToHome() {
+        card.show(mainPanel, "home");
     }
 
     public static void main(String[] args) {

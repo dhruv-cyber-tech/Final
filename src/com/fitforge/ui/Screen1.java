@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class Screen1 extends JPanel {
 
-    private Image background;
+    private final Image background;
 
     // Helper method to create JLabels
     private JLabel createLabel(String text, int fontSize, boolean bold, Color color, int alignment, int x, int y, int w, int h) {
