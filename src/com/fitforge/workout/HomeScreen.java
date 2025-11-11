@@ -32,7 +32,7 @@ public class HomeScreen extends JPanel {
         add(title, BorderLayout.NORTH);
 
         // --- 3x2 grid ---
-        JPanel cardsPanel = new JPanel(new GridLayout(3, 2, 10, 10)); // 3 rows, 2 cols, 10px gaps
+        JPanel cardsPanel = new JPanel(new GridLayout(3, 2, 12, 12)); // 3 rows, 2 cols, 10px gaps
         cardsPanel.setOpaque(false); // Make transparent
         cardsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -123,7 +123,7 @@ public class HomeScreen extends JPanel {
 
             // Create a semi-transparent panel for the text to sit on
             JPanel textPanel = new JPanel(new BorderLayout());
-            textPanel.setBackground(new Color(0, 0, 0, 100)); // Black with 100/255 alpha (semi-transparent)
+            textPanel.setBackground(new Color(0, 0, 0, 0)); // Black with 100/255 alpha (semi-transparent)
             textPanel.add(titleLabel, BorderLayout.CENTER);
 
             // Add the text panel to the bottom of the card

@@ -1,20 +1,33 @@
 // 1. Update package
 package com.fitforge.workout;
 
+import com.fitforge.main.App2;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.*;
-// 2. Add import for App2
-import com.fitforge.main.App2;
 
 public class WorkoutScreen extends JPanel {
 
     // 3. Change MainApp to App2
     private App2 app;
     private JLabel gifLabel, nameLabel, repsLabel, tipLabel;
-    private JButton nextButton, backButton;
+
+    // --- CHANGED ---
+    // Swapped JButton for a JLabel to hold the animation
+    private JLabel nextButton;
+    // --- END CHANGED ---
+
+    private JButton backButton;
     private ArrayList<Exercise> exercises;
     private int currentIndex = 0;
+
+    // --- NEW ---
+    // This is the classpath folder for your GIFs.
+    // The trailing slash is important!
+    private String base = "/gifs/";
+    // --- END NEW ---
 
     // 4. Change MainApp to App2 in the constructor
     public WorkoutScreen(App2 app) { // <-- FIXED
@@ -37,7 +50,7 @@ public class WorkoutScreen extends JPanel {
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-        bottomPanel.setBackground(Color.WHITE); // You can change this to your theme color!
+        bottomPanel.setBackground(Color.WHITE);
 
         repsLabel = new JLabel("Reps: ", SwingConstants.CENTER);
         repsLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
@@ -50,10 +63,26 @@ public class WorkoutScreen extends JPanel {
         JPanel btnPanel = new JPanel(new FlowLayout());
         btnPanel.setOpaque(false);
         backButton = new JButton("← Back");
-        nextButton = new JButton("Next ➡️");
+
+        // --- CHANGED ---
+        // Create the JLabel for the animated button
+        nextButton = new JLabel();
+
+        // Load the icon from the classpath (assuming "resources" is a Source Folder)
+        java.net.URL nextIconUrl = getClass().getResource(base + "next_animation.gif");
+
+        if (nextIconUrl != null) {
+            nextButton.setIcon(new ImageIcon(nextIconUrl));
+        } else {
+            // Fallback in case the animation is missing
+            nextButton.setText("Next ➡️");
+            System.out.println("Error: Could not load next_animation.gif from " + base);
+        }
+        nextButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        // --- END CHANGED ---
 
         btnPanel.add(backButton);
-        btnPanel.add(nextButton);
+        btnPanel.add(nextButton); // Add the new JLabel button
 
         bottomPanel.add(repsLabel);
         bottomPanel.add(Box.createVerticalStrut(5));
@@ -65,7 +94,18 @@ public class WorkoutScreen extends JPanel {
 
         // Button actions
         backButton.addActionListener(e -> app.backToHome());
-        nextButton.addActionListener(e -> showNextExercise());
+
+        // --- CHANGED ---
+        // Add listener to the new JLabel button
+        nextButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (nextButton.isEnabled()) {
+                    showNextExercise();
+                }
+            }
+        });
+        // --- END CHANGED ---
     }
 
     // Called when user selects workout level
@@ -75,50 +115,227 @@ public class WorkoutScreen extends JPanel {
         showExercise(currentIndex);
     }
 
+    /**
+     * --- THIS IS THE NEW, CLEANER METHOD ---
+     */
     private ArrayList<Exercise> getExercises(String bodyPart, String level) {
         ArrayList<Exercise> list = new ArrayList<>();
 
-        // --- MODIFIED LINE ---
-        // 1. This path is now a CLASSPATH path.
-        // The leading "/" means "start at the root of the src folder".
-        String base = "/resources/gifs";
-        // --- END MODIFICATION ---
-        if (level.equalsIgnoreCase("Beginner") && bodyPart.equalsIgnoreCase("Chest Training")) {
-            // These paths are now correct classpath paths
-            list.add(new Exercise("Jumping Jacks", "15 reps", "Keep your neck relaxed.", base + "/jumpingjack.gif"));
-            list.add(new Exercise("Leg Raise", "12 reps", "Do not lift lower back off floor.", base + "/chest2.gif"));
-            list.add(new Exercise("Plank", "30 seconds", "Keep body straight.", base + "/chest3.gif"));
-            list.add(new Exercise("Mountain Climbers", "20 reps", "Engage core muscles.", base + "/chest4.gif"));
-        } else if (level.equalsIgnoreCase("Intermediate") && bodyPart.equalsIgnoreCase("Chest Training")) {
-            // list.add(new Exercise("Incline Push-Ups", "12 reps", "Use a chair or bench.", base + "/inclinepushup.gif"));
-            // list.add(new Exercise("Chest Dips", "10 reps", "Keep elbows in.", base + "/chestdip.gif"));
+        // Use the bodyPart to decide which exercises to add
+        switch (bodyPart.toLowerCase()) {
 
-            // list.add(new Exercise("Wide Arm Push-Ups", "10 reps", "Hands wider than shoulders.", base + "/widepushup.gif"));
-            // list.add(new Exercise("Plank to Push-Up", "12 reps", "Alternate positions.", base + "/plankpushup.gif"));
-        } else if (level.equalsIgnoreCase("Beginner") && bodyPart.equalsIgnoreCase("Legs Training")) {
-            // list.add(new Exercise("Squats", "15 reps", "Keep knees behind toes.", base + "/squat.gif"));
+            case "chest training": {
+                // 1. Define reps for each level
+                String jjReps = "15 reps";
+                String lrReps = "12 reps";
+                String plankTime = "30 seconds";
+                String mcReps = "20 reps";
 
-            // list.add(new Exercise("Lunges", "10 reps per leg", "Keep upper body straight.", base + "/lunge.gif"));
-            // list.add(new Exercise("Calf Raises", "20 reps", "Go slow up and down.", base + "/calfraise.gif"));
-            // list.add(new Exercise("Wall Sit", "30 sec", "Keep back flat against wall.", base + "/wallsit.gif"));
+                if (level.equalsIgnoreCase("Intermediate")) {
+                    jjReps = "25 reps"; // Increased
+                    lrReps = "18 reps"; // Increased
+                    plankTime = "45 seconds"; // Increased
+                    mcReps = "30 reps"; // Increased
+                } else if (level.equalsIgnoreCase("Advanced")) {
+                    jjReps = "35 reps"; // Increased
+                    lrReps = "25 reps"; // Increased
+                    plankTime = "60 seconds"; // Increased
+                    mcReps = "40 reps"; // Increased
+                }
+
+                // 2. Add the exercises ONCE, using the variables
+                // (Note: I fixed "jumpingjack3.gif" to "jumpingjack.gif" based on your file list)
+                list.add(new Exercise("Jumping Jacks", jjReps, "Keep your neck relaxed.", base + "chest1.gif"));
+                list.add(new Exercise("Leg Raise", lrReps, "Do not lift lower back off floor.", base + "chest2.gif"));
+                list.add(new Exercise("Plank", plankTime, "Keep body straight.", base + "chest3.gif"));
+                list.add(new Exercise("Mountain Climbers", mcReps, "Engage core muscles.", base + "chest4.gif"));
+                break;
+            }
+
+            case "abs training": {
+                // 1. Define reps for each level
+                String crunchReps = "20 reps";
+                String legRaiseReps = "15 reps";
+                String plankTime = "30 seconds";
+                String bicycleReps = "20 reps";
+                // TODO: Add your other Abs exercise reps here
+
+                if (level.equalsIgnoreCase("Intermediate")) {
+                    crunchReps = "30 reps";
+                    legRaiseReps = "20 reps";
+                    plankTime = "45 seconds";
+                    bicycleReps = "30 reps";
+                    // TODO: Set intermediate reps for other exercises
+                } else if (level.equalsIgnoreCase("Advanced")) {
+                    crunchReps = "40 reps";
+                    legRaiseReps = "25 reps";
+                    plankTime = "60 seconds";
+                    bicycleReps = "40 reps";
+                    // TODO: Set advanced reps for other exercises
+                }
+
+                // 2. Add your REAL Abs exercises here
+                // TODO: Replace these examples with your actual exercises
+                list.add(new Exercise("Crunches", crunchReps, "Lift shoulders, not neck.", base + "abs5.gif"));
+                list.add(new Exercise("Lying Leg Raises", legRaiseReps, "Keep lower back flat.", base + "abs2.gif"));
+                list.add(new Exercise("Plank", plankTime, "Keep body straight.", base + "abs3.gif"));
+                list.add(new Exercise("Bicycle Crunches", bicycleReps, "Elbow to opposite knee.", base + "abs4.gif"));
+                // ... add your other 2 exercises
+                break;
+            }
+
+            case "back training": {
+                // 1. Define reps for each level
+                String pullupReps = "8 reps";
+                String rowReps = "12 reps";
+                String deadliftReps = "10 reps";
+                String supermanReps = "15 reps";
+                // TODO: Add your other Back exercise reps here
+
+                if (level.equalsIgnoreCase("Intermediate")) {
+                    pullupReps = "12 reps";
+                    rowReps = "15 reps";
+                    deadliftReps = "15 reps";
+                    supermanReps = "20 reps";
+                } else if (level.equalsIgnoreCase("Advanced")) {
+                    pullupReps = "15 reps";
+                    rowReps = "20 reps";
+                    deadliftReps = "20 reps";
+                    supermanReps = "25 reps";
+                }
+
+                // 2. Add your REAL Back exercises here
+                // TODO: Replace these examples with your actual exercises
+                list.add(new Exercise("Pull Ups (Assisted)", pullupReps, "Use a band or machine.", base + "abs1.gif"));
+                list.add(new Exercise("Dumbbell Rows", rowReps, "Keep back straight.", base + "squat.gif"));
+                list.add(new Exercise("Deadlifts", deadliftReps, "Engage your core.", base + "jumpingjack.gif"));
+                list.add(new Exercise("Superman", supermanReps, "Lift arms and legs together.", base + "abs1.gif"));
+                break;
+            }
+
+            case "Yoga": {
+                // 1. Define reps for each level
+                String pullupReps = "8 reps";
+                String rowReps = "12 reps";
+                String deadliftReps = "10 reps";
+                String supermanReps = "15 reps";
+                // TODO: Add your other Back exercise reps here
+
+                if (level.equalsIgnoreCase("Intermediate")) {
+                    pullupReps = "12 reps";
+                    rowReps = "15 reps";
+                    deadliftReps = "15 reps";
+                    supermanReps = "20 reps";
+                } else if (level.equalsIgnoreCase("Advanced")) {
+                    pullupReps = "15 reps";
+                    rowReps = "20 reps";
+                    deadliftReps = "20 reps";
+                    supermanReps = "25 reps";
+                }
+
+                // 2. Add your REAL Back exercises here
+                // TODO: Replace these examples with your actual exercises
+                list.add(new Exercise("Pull Ups (Assisted)", pullupReps, "Use a band or machine.", base + "abs1.gif"));
+                list.add(new Exercise("Dumbbell Rows", rowReps, "Keep back straight.", base + "squat.gif"));
+                list.add(new Exercise("Deadlifts", deadliftReps, "Engage your core.", base + "jumpingjack.gif"));
+                list.add(new Exercise("Superman", supermanReps, "Lift arms and legs together.", base + "abs1.gif"));
+                break;
+            }
+
+            case "Strength": {
+                // 1. Define reps for each level
+                String crunchReps = "20 reps";
+                String legRaiseReps = "15 reps";
+                String plankTime = "30 seconds";
+                String bicycleReps = "20 reps";
+                // TODO: Add your other Abs exercise reps here
+
+                if (level.equalsIgnoreCase("Intermediate")) {
+                    crunchReps = "30 reps";
+                    legRaiseReps = "20 reps";
+                    plankTime = "45 seconds";
+                    bicycleReps = "30 reps";
+                    // TODO: Set intermediate reps for other exercises
+                } else if (level.equalsIgnoreCase("Advanced")) {
+                    crunchReps = "40 reps";
+                    legRaiseReps = "25 reps";
+                    plankTime = "60 seconds";
+                    bicycleReps = "40 reps";
+                    // TODO: Set advanced reps for other exercises
+                }
+
+                // 2. Add your REAL Abs exercises here
+                // TODO: Replace these examples with your actual exercises
+                list.add(new Exercise("Crunches", crunchReps, "Lift shoulders, not neck.", base + "abs5.gif"));
+                list.add(new Exercise("Lying Leg Raises", legRaiseReps, "Keep lower back flat.", base + "abs2.gif"));
+                list.add(new Exercise("Plank", plankTime, "Keep body straight.", base + "abs3.gif"));
+                list.add(new Exercise("Bicycle Crunches", bicycleReps, "Elbow to opposite knee.", base + "abs4.gif"));
+                // ... add your other 2 exercises
+                break;
+            }
+
+            case "Stretching": {
+                // 1. Define reps for each level
+                String crunchReps = "20 reps";
+                String legRaiseReps = "15 reps";
+                String plankTime = "30 seconds";
+                String bicycleReps = "20 reps";
+                // TODO: Add your other Abs exercise reps here
+
+                if (level.equalsIgnoreCase("Intermediate")) {
+                    crunchReps = "30 reps";
+                    legRaiseReps = "20 reps";
+                    plankTime = "45 seconds";
+                    bicycleReps = "30 reps";
+                    // TODO: Set intermediate reps for other exercises
+                } else if (level.equalsIgnoreCase("Advanced")) {
+                    crunchReps = "40 reps";
+                    legRaiseReps = "25 reps";
+                    plankTime = "60 seconds";
+                    bicycleReps = "40 reps";
+                    // TODO: Set advanced reps for other exercises
+                }
+
+                // 2. Add your REAL Abs exercises here
+                // TODO: Replace these examples with your actual exercises
+                list.add(new Exercise("Crunches", crunchReps, "Lift shoulders, not neck.", base + "abs5.gif"));
+                list.add(new Exercise("Lying Leg Raises", legRaiseReps, "Keep lower back flat.", base + "abs2.gif"));
+                list.add(new Exercise("Plank", plankTime, "Keep body straight.", base + "abs3.gif"));
+                list.add(new Exercise("Bicycle Crunches", bicycleReps, "Elbow to opposite knee.", base + "abs4.gif"));
+                // ... add your other 2 exercises
+                break;
+            }// ... Add a 'case' for "Stretching", "Yoga", "Strength" ...
+
+            default:
+                // This handles any combination you haven't added yet
+                System.out.println("Workout not found for bodyPart: " + bodyPart);
         }
+
         System.out.println("Exercises loaded: " + list.size());
         return list;
     }
 
     private void showExercise(int index) {
         if (exercises == null || exercises.isEmpty()) {
+            // --- NEW: Safety check for empty lists ---
+            nameLabel.setText("No Exercises");
+            repsLabel.setText("Reps: 0");
+            tipLabel.setText("<html><center>No workout found for this category.</center></html>");
+            gifLabel.setIcon(null);
+            gifLabel.setText("Please go back");
+            nextButton.setEnabled(false);
+            nextButton.setVisible(false); // Hide the label
             return;
+            // --- END NEW ---
         }
+
         Exercise ex = exercises.get(index);
 
         nameLabel.setText(ex.name);
         repsLabel.setText("Reps: " + ex.reps);
         tipLabel.setText("<html><center>" + ex.tip + "</center></html>");
 
-        // --- MODIFIED SECTION ---
-        // 2. We now use getClass().getResource() to load the image
-        // This is the most reliable way to load resources from your classpath.
+        // This is your current loading method, it's unchanged
         java.net.URL gifURL = getClass().getResource(ex.gifPath);
 
         if (gifURL != null) {
@@ -130,9 +347,13 @@ public class WorkoutScreen extends JPanel {
             gifLabel.setText("GIF not found!");
             System.out.println("Failed to load (as resource): " + ex.gifPath);
         }
-        // --- END MODIFICATION ---
 
-        nextButton.setEnabled(index < exercises.size() - 1);
+        // --- CHANGED ---
+        // Control the visibility of the new JLabel button
+        boolean hasNext = index < exercises.size() - 1;
+        nextButton.setEnabled(hasNext);
+        nextButton.setVisible(hasNext);
+        // --- END CHANGED ---
     }
 
     private void showNextExercise() {
@@ -141,6 +362,10 @@ public class WorkoutScreen extends JPanel {
             showExercise(currentIndex);
         } else {
             JOptionPane.showMessageDialog(this, "Workout Complete! 💪", "Done", JOptionPane.INFORMATION_MESSAGE);
+            // --- NEW ---
+            // After workout is complete, go back to home screen
+            app.backToHome();
+            // --- END NEW ---
         }
     }
 }

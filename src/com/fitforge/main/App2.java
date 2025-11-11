@@ -18,8 +18,6 @@ public class App2 {
     JPanel mainPanel;
     CardLayout card;
     UserManager userManager;
-
-    // 2. Add fields for the new screens
     LevelSelectionPanel levelSelectionPanel;
     HomeScreen homeScreen;
     WorkoutScreen workoutScreen;
@@ -77,10 +75,8 @@ public class App2 {
         mainPanel.add(loginPanel, "login");
         mainPanel.add(registerPanel, "register");
         mainPanel.add(userDetailsPanel, "dashboard");
-
-        // 5. ADD the new screens to the CardLayout
-        mainPanel.add(homeScreen, "home"); // "home" now points to your workout list
-        mainPanel.add(workoutScreen, "workout"); // New card for the exercise screen
+        mainPanel.add(homeScreen, "home");
+        mainPanel.add(workoutScreen, "workout");
         mainPanel.add(levelSelectionPanel, "levelSelect");
 
         PhonePanel phonePanel = new PhonePanel();
@@ -92,13 +88,8 @@ public class App2 {
         f.setVisible(true);
     }
 
-    // 6. ADD NAVIGATION METHODS
-    /**
-     * Called when user clicks a workout level on the HomeScreen. It loads the
-     * exercises and switches to the workout panel.
-     */
     public void showLevelSelector(String bodyPart) {
-        levelSelectionPanel.setBodyPart(bodyPart); // Tell the panel which workout was chosen
+        levelSelectionPanel.setBodyPart(bodyPart);
         card.show(mainPanel, "levelSelect");
     }
 
@@ -107,10 +98,6 @@ public class App2 {
         card.show(mainPanel, "workout");
     }
 
-    /**
-     * Called when user presses "← Back" on the WorkoutScreen. It switches back
-     * to the main home (workout list) panel.
-     */
     public void backToHome() {
         card.show(mainPanel, "home");
     }
