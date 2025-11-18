@@ -8,7 +8,7 @@ public class UserManager {
     private int userCount;
 
     public UserManager() {
-        // Fixed size arrays (you can increase if needed)
+        // Fixed size arrays (we can increase if needed)
         usernames = new String[20];
         passwords = new String[20];
         userCount = 0;

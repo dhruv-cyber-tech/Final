@@ -1,4 +1,4 @@
-package com.fitforge.workout; // <-- THE FIX
+package com.fitforge.workout;
 
 class Exercise {
 

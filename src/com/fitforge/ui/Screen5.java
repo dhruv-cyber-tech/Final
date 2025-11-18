@@ -25,7 +25,7 @@ public class Screen5 extends JPanel {
         add(createLabel("Login or Register to Start", 12, false, Color.WHITE, JLabel.CENTER, 20, 450, 320, 30));
 
         RoundButtonCanvas next5 = new RoundButtonCanvas("Login");
-        next5.setBounds(150, 540, 60, 60);
+        next5.setBounds(150, 570, 60, 60);
         next5.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

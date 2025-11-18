@@ -29,7 +29,7 @@ public class App2 {
         f.setSize(420, 750);
         f.setLocationRelativeTo(null);
         f.setResizable(false);
-        f.setBackground(new Color(0, 0, 0, 0));
+        f.setBackground(new Color(0, 0, 0, 100));
 
         JLayeredPane layeredPane = new JLayeredPane();
         f.setContentPane(layeredPane);
@@ -103,6 +103,6 @@ public class App2 {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new App2());
+        SwingUtilities.invokeLater(() -> new App2());  // run the gui in the event-dispatching thread (EDT)
     }
 }

@@ -16,7 +16,7 @@ public class WorkoutScreen extends JPanel {
 
     // --- CHANGED ---
     // Swapped JButton for a JLabel to hold the animation
-    private JLabel nextButton;
+    private JButton nextButton;
     // --- END CHANGED ---
 
     private JButton backButton;
@@ -38,7 +38,7 @@ public class WorkoutScreen extends JPanel {
         // Title label
         nameLabel = new JLabel("Exercise 1", SwingConstants.CENTER);
         nameLabel.setFont(new Font("SansSerif", Font.BOLD, 22));
-        nameLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        nameLabel.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));
         add(nameLabel, BorderLayout.NORTH);
 
         // GIF label
@@ -66,7 +66,7 @@ public class WorkoutScreen extends JPanel {
 
         // --- CHANGED ---
         // Create the JLabel for the animated button
-        nextButton = new JLabel();
+        nextButton = new JButton();
 
         // Load the icon from the classpath (assuming "resources" is a Source Folder)
         java.net.URL nextIconUrl = getClass().getResource(base + "next_animation.gif");
@@ -140,11 +140,9 @@ public class WorkoutScreen extends JPanel {
                     jjReps = "35 reps"; // Increased
                     lrReps = "25 reps"; // Increased
                     plankTime = "60 seconds"; // Increased
-                    mcReps = "40 reps"; // Increased
+                    mcReps = "40 reps";
                 }
 
-                // 2. Add the exercises ONCE, using the variables
-                // (Note: I fixed "jumpingjack3.gif" to "jumpingjack.gif" based on your file list)
                 list.add(new Exercise("Jumping Jacks", jjReps, "Keep your neck relaxed.", base + "chest1.gif"));
                 list.add(new Exercise("Leg Raise", lrReps, "Do not lift lower back off floor.", base + "chest2.gif"));
                 list.add(new Exercise("Plank", plankTime, "Keep body straight.", base + "chest3.gif"));
@@ -213,7 +211,7 @@ public class WorkoutScreen extends JPanel {
                 break;
             }
 
-            case "Yoga": {
+            case "yoga": {
                 // 1. Define reps for each level
                 String pullupReps = "8 reps";
                 String rowReps = "12 reps";
@@ -242,7 +240,7 @@ public class WorkoutScreen extends JPanel {
                 break;
             }
 
-            case "Strength": {
+            case "strength": {
                 // 1. Define reps for each level
                 String crunchReps = "20 reps";
                 String legRaiseReps = "15 reps";
@@ -266,15 +264,15 @@ public class WorkoutScreen extends JPanel {
 
                 // 2. Add your REAL Abs exercises here
                 // TODO: Replace these examples with your actual exercises
-                list.add(new Exercise("Crunches", crunchReps, "Lift shoulders, not neck.", base + "abs5.gif"));
-                list.add(new Exercise("Lying Leg Raises", legRaiseReps, "Keep lower back flat.", base + "abs2.gif"));
-                list.add(new Exercise("Plank", plankTime, "Keep body straight.", base + "abs3.gif"));
+                list.add(new Exercise("Burpees", crunchReps, "Keep Your Core Tight.", base + "strenght2.gif"));
+                list.add(new Exercise("Mountain Climbers", legRaiseReps, "Keep Your Hips Low.", base + "strength3.gif"));
+                list.add(new Exercise("Lunges", plankTime, "Keep Knees at 90 Degrees", base + "strength1.gif"));
                 list.add(new Exercise("Bicycle Crunches", bicycleReps, "Elbow to opposite knee.", base + "abs4.gif"));
                 // ... add your other 2 exercises
                 break;
             }
 
-            case "Stretching": {
+            case "stretching": {
                 // 1. Define reps for each level
                 String crunchReps = "20 reps";
                 String legRaiseReps = "15 reps";

@@ -47,11 +47,11 @@ public class HomeScreen extends JPanel {
 
         // --- Fill the grid with our new custom ImageCardPanel ---
         cardsPanel.add(new ImageCardPanel(app, "Chest Training", chestImg));
-        cardsPanel.add(new ImageCardPanel(app, null, legsImg));
+        cardsPanel.add(new ImageCardPanel(app, "Stretching", legsImg));     // Was null
         cardsPanel.add(new ImageCardPanel(app, "Back Training", backImg));
-        cardsPanel.add(new ImageCardPanel(app, null, armsImg));
+        cardsPanel.add(new ImageCardPanel(app, "Strength", armsImg));       // Was null
         cardsPanel.add(new ImageCardPanel(app, "Abs Training", absImg));
-        cardsPanel.add(new ImageCardPanel(app, null, cardioImg));
+        cardsPanel.add(new ImageCardPanel(app, "Yoga", cardioImg));         // Was null
 
         add(cardsPanel, BorderLayout.CENTER);
 
@@ -114,26 +114,33 @@ public class HomeScreen extends JPanel {
             setLayout(new BorderLayout()); // To position text at the bottom
             setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-            // Create a label for the title
-            JLabel titleLabel = new JLabel(title);
-            titleLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
-            titleLabel.setForeground(Color.WHITE);
-            titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-            titleLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // Padding
+            // Create a label for the titles
+            if (title != null && !title.equals("Stretching") && !title.equals("Strength") && !title.equals("Yoga")) {
 
-            // Create a semi-transparent panel for the text to sit on
-            JPanel textPanel = new JPanel(new BorderLayout());
-            textPanel.setBackground(new Color(0, 0, 0, 0)); // Black with 100/255 alpha (semi-transparent)
-            textPanel.add(titleLabel, BorderLayout.CENTER);
+                JLabel titleLabel = new JLabel(title);
+                titleLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
+                titleLabel.setForeground(Color.WHITE);
+                titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                titleLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-            // Add the text panel to the bottom of the card
-            add(textPanel, BorderLayout.SOUTH);
+                JPanel textPanel = new JPanel(new BorderLayout());
+
+                // Restored semi-transparent background
+                textPanel.setBackground(new Color(0, 0, 0, 100));
+                textPanel.add(titleLabel, BorderLayout.CENTER);
+
+                add(textPanel, BorderLayout.SOUTH);
+            }
+            // --- END OF FIX 3 ---
 
             // Add click listener to the whole panel
             addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    app.showLevelSelector(title);
+                    // This now correctly passes "Yoga", "Stretching", etc.
+                    if (title != null) {
+                        app.showLevelSelector(title);
+                    }
                 }
             });
         }
