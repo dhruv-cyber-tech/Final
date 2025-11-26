@@ -1,4 +1,6 @@
 package com.fitforge.model;
+import com.fitforge.model.*;
+import com.fitforge.ui.*;
 
 public class UserManager {
 
@@ -31,6 +33,7 @@ public class UserManager {
     public boolean validateUser(String username, String password) {
         for (int i = 0; i < userCount; i++) {
             if (usernames[i].equals(username) && passwords[i].equals(password)) {
+                userData.
                 return true;
             }
         }

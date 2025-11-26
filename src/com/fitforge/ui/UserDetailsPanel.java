@@ -1,13 +1,15 @@
 package com.fitforge.ui;
 
+import com.fitforge.model.User;
 import java.awt.*;
 import javax.swing.*;
 
 public class UserDetailsPanel extends JPanel {
 
-    public UserDetailsPanel(CardLayout card, JPanel mainPanel) {
+    // Accepts UserData to save info
+    public UserDetailsPanel(CardLayout card, JPanel mainPanel, User userData) {
         setLayout(null);
-        setBackground(new Color(69, 51, 181)); // Matching background
+        setBackground(new Color(69, 51, 181)); 
 
         JLabel titleLabel = new JLabel("Tell Us About You", JLabel.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 28));
@@ -64,16 +66,18 @@ public class UserDetailsPanel extends JPanel {
         JRadioButton maleButton = new JRadioButton("Male");
         maleButton.setFont(new Font("Arial", Font.PLAIN, 14));
         maleButton.setForeground(Color.WHITE);
-        maleButton.setBackground(null); // Transparent background
+        maleButton.setBackground(null);
         maleButton.setBounds(155, 260, 70, 25);
         maleButton.setOpaque(false);
+        maleButton.setActionCommand("Male");
 
         JRadioButton femaleButton = new JRadioButton("Female");
         femaleButton.setFont(new Font("Arial", Font.PLAIN, 14));
         femaleButton.setForeground(Color.WHITE);
-        femaleButton.setBackground(null); // Transparent background
+        femaleButton.setBackground(null);
         femaleButton.setBounds(235, 260, 80, 25);
         femaleButton.setOpaque(false);
+        femaleButton.setActionCommand("Female");
 
         ButtonGroup genderGroup = new ButtonGroup();
         genderGroup.add(maleButton);
@@ -102,14 +106,12 @@ public class UserDetailsPanel extends JPanel {
         goalsComboBox.setBackground(new Color(240, 240, 240));
         add(goalsComboBox);
 
-        // --- Message Label (for errors or success) ---
         JLabel messageLabel = new JLabel("", JLabel.CENTER);
         messageLabel.setFont(new Font("Arial", Font.PLAIN, 12));
         messageLabel.setForeground(new Color(255, 100, 100));
         messageLabel.setBounds(50, 400, 260, 30);
         add(messageLabel);
 
-        // --- Submit Button ---
         JButton submitButton = new JButton("Save & Continue");
         submitButton.setFont(new Font("Arial", Font.BOLD, 14));
         submitButton.setBounds(100, 450, 160, 40);
@@ -119,22 +121,27 @@ public class UserDetailsPanel extends JPanel {
         submitButton.setBorderPainted(false);
 
         submitButton.addActionListener(e -> {
-            // Basic validation
             if (weightField.getText().trim().isEmpty()
                     || heightField.getText().trim().isEmpty()
                     || ageField.getText().trim().isEmpty()
                     || (genderGroup.getSelection() == null)
                     || goalsComboBox.getSelectedIndex() == 0) {
 
-                messageLabel.setForeground(new Color(255, 100, 100)); // Set red
+                messageLabel.setForeground(new Color(255, 100, 100));
                 messageLabel.setText("Please fill all fields!");
             } else {
+                // --- SAVE DATA TO MODEL ---
+                userData.setWeight(weightField.getText().trim());
+                userData.setHeight(heightField.getText().trim());
+                userData.setAge(ageField.getText().trim());
+                userData.setGender(genderGroup.getSelection().getActionCommand());
+                userData.setGoal((String) goalsComboBox.getSelectedItem());
+                // --------------------------
 
-                messageLabel.setForeground(new Color(100, 255, 100)); // Set green
+                messageLabel.setForeground(new Color(100, 255, 100));
                 messageLabel.setText("Details Saved!");
 
-                // Navigate to the new home screen after a short delay
-                Timer timer = new Timer(1000, evt -> card.show(mainPanel, "home")); // <-- THIS IS THE FIX
+                Timer timer = new Timer(1000, evt -> card.show(mainPanel, "home"));
                 timer.setRepeats(false);
                 timer.start();
             }

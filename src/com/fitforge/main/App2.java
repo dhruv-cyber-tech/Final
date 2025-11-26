@@ -1,6 +1,7 @@
 package com.fitforge.main;
 
 import com.fitforge.auth.*;
+import com.fitforge.model.User;
 import com.fitforge.model.UserManager;
 import com.fitforge.ui.*;
 import com.fitforge.workout.HomeScreen;
@@ -12,134 +13,123 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+
 public class App2 {
 
     JFrame f;
     JPanel mainPanel;
     CardLayout card;
     UserManager userManager;
+    
+    // --- Data Model ---
+    User userData;
+    
     LevelSelectionPanel levelSelectionPanel;
     HomeScreen homeScreen;
     WorkoutScreen workoutScreen;
+    
+    // --- Profile Screen ---
+    profileScreen profile;
 
     public App2() {
         f = new JFrame("FitForge App");
-        f.setUndecorated(true);    //disable default window decorations
+        f.setUndecorated(true);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(420, 750);
-        f.setLocationRelativeTo(null); //center the frame
+        f.setLocationRelativeTo(null);
         f.setResizable(false);
         f.setBackground(new Color(0, 0, 0, 0));
 
-        JLayeredPane layeredPane = new JLayeredPane(); // For layering phone frame over content
-        f.setContentPane(layeredPane); // Set layered pane as content pane
+        JLayeredPane layeredPane = new JLayeredPane();
+        f.setContentPane(layeredPane);
         
         userManager = new UserManager();
+        
+        // --- Initialize UserData ---
+        userData = new User();
+        
         card = new CardLayout();
         mainPanel = new JPanel(card);
         mainPanel.setBounds(30, 20, 368, 717);
         mainPanel.setOpaque(false);
 
-        Image img1 = null, img2 = null, img3 = null, img5 = null; // img4 = null,
+        Image img1 = null, img2 = null, img3 = null, img5 = null;
 
-        //copy pasted
         try {
-
             img1 = ImageIO.read(new File("src/resources/images/first.jpg"));
-
             img2 = ImageIO.read(new File("src/resources/images/second.jpg"));
-
             img3 = ImageIO.read(new File("src/resources/images/third.jpg"));
-
-            // img4 = ImageIO.read(new File("src/resources/images/four.jpg"));
             img5 = ImageIO.read(new File("src/resources/images/fifth.png"));
-
         } catch (IOException e) {
-
             System.out.println("Error loading image: " + e.getMessage());
-
         }
 
         Screen1 screen1 = new Screen1(img1, card, mainPanel);
-
         Screen2 screen2 = new Screen2(img2, card, mainPanel);
-
         Screen3 screen3 = new Screen3(img3, card, mainPanel);
-
-        // Screen4 screen4 = new Screen4(img4, card, mainPanel);
         Screen5 screen5 = new Screen5(img5, card, mainPanel);
 
         LoginPanel loginPanel = new LoginPanel(userManager, card, mainPanel);
-
         RegisterPanel registerPanel = new RegisterPanel(userManager, card, mainPanel);
 
-        UserDetailsPanel userDetailsPanel = new UserDetailsPanel(card, mainPanel);
+        // --- Pass userData to UserDetailsPanel ---
+        // This fixes the constructor error
+        UserDetailsPanel userDetailsPanel = new UserDetailsPanel(card, mainPanel, userData);
+
+        // --- Initialize ProfileScreen ---
+        profile = new profileScreen(this, userData);
 
         homeScreen = new HomeScreen(this);
-
         workoutScreen = new WorkoutScreen(this);
-
         levelSelectionPanel = new LevelSelectionPanel(this);
 
         mainPanel.add(screen1, "screen1");
-
         mainPanel.add(screen2, "screen2");
-
         mainPanel.add(screen3, "screen3");
-
-        // mainPanel.add(screen4, "screen4");
         mainPanel.add(screen5, "screen5");
-
         mainPanel.add(loginPanel, "login");
-
         mainPanel.add(registerPanel, "register");
-
         mainPanel.add(userDetailsPanel, "dashboard");
-
         mainPanel.add(homeScreen, "home");
-
         mainPanel.add(workoutScreen, "workout");
-
         mainPanel.add(levelSelectionPanel, "levelSelect");
+        
+        // --- Add Profile Screen ---
+        mainPanel.add(profile, "profile");
 
         PhonePanel phonePanel = new PhonePanel();
-
         phonePanel.setBounds(0, 0, 420, 750);
 
         layeredPane.add(mainPanel, JLayeredPane.DEFAULT_LAYER);
-
         layeredPane.add(phonePanel, JLayeredPane.PALETTE_LAYER);
 
         f.setVisible(true);
-
     }
 
     public void showLevelSelector(String bodyPart) {
-
         levelSelectionPanel.setBodyPart(bodyPart);
-
         card.show(mainPanel, "levelSelect");
-
     }
 
     public void openWorkoutWindow(String bodyPart, String level) {
-
         workoutScreen.loadWorkout(bodyPart, level);
-
         card.show(mainPanel, "workout");
-
     }
 
     public void backToHome() {
-
         card.show(mainPanel, "home");
-
+    }
+    
+    // --- This method fixes the "cannot find symbol" error ---
+    public void showProfile() {
+        // Refresh data before showing
+        if (profile != null) {
+            profile.refreshProfile();
+            card.show(mainPanel, "profile");
+        }
     }
 
     public static void main(String[] args) {
-
-        SwingUtilities.invokeLater(() -> new App2());  // this will run the gui in the event-dispatching thread (EDT)
-
+        SwingUtilities.invokeLater(() -> new App2());
     }
-
 }
