@@ -38,7 +38,7 @@ public class WorkoutScreen extends JPanel {
         // Title label
         nameLabel = new JLabel("Exercise 1", SwingConstants.CENTER);
         nameLabel.setFont(new Font("SansSerif", Font.BOLD, 22));
-        nameLabel.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));
+        nameLabel.setBorder(BorderFactory.createEmptyBorder(25, 10, 10, 10));
         add(nameLabel, BorderLayout.NORTH);
 
         // GIF label
@@ -177,7 +177,7 @@ public class WorkoutScreen extends JPanel {
                 list.add(new Exercise("Crunches", crunchReps, "Lift shoulders, not neck.", base + "abs5.gif"));
                 list.add(new Exercise("Lying Leg Raises", legRaiseReps, "Keep lower back flat.", base + "abs2.gif"));
                 list.add(new Exercise("Plank", plankTime, "Keep body straight.", base + "abs3.gif"));
-                list.add(new Exercise("Bicycle Crunches", bicycleReps, "Elbow to opposite knee.", base + "abs4.gif"));
+                list.add(new Exercise("Bicycle Crunches", bicycleReps, "Elbow to opposite knee.", base + "abs1.gif"));
                 // ... add your other 2 exercises
                 break;
             }
@@ -204,10 +204,10 @@ public class WorkoutScreen extends JPanel {
 
                 // 2. Add your REAL Back exercises here
                 // TODO: Replace these examples with your actual exercises
-                list.add(new Exercise("Pull Ups (Assisted)", pullupReps, "Use a band or machine.", base + "abs1.gif"));
-                list.add(new Exercise("Dumbbell Rows", rowReps, "Keep back straight.", base + "squat.gif"));
-                list.add(new Exercise("Deadlifts", deadliftReps, "Engage your core.", base + "jumpingjack.gif"));
-                list.add(new Exercise("Superman", supermanReps, "Lift arms and legs together.", base + "abs1.gif"));
+                list.add(new Exercise("Pull Ups (Assisted)", pullupReps, "Use a band or machine.", base + "back1.gif"));
+                list.add(new Exercise("Dumbbell Rows", rowReps, "Keep back straight.", base + "back2.gif"));
+                list.add(new Exercise("Deadlifts", deadliftReps, "Engage your core.", base + "back4.gif"));
+                list.add(new Exercise("Superman", supermanReps, "Lift arms and legs together.", base + "jumpingjack.gif"));
                 break;
             }
 
@@ -264,10 +264,10 @@ public class WorkoutScreen extends JPanel {
 
                 // 2. Add your REAL Abs exercises here
                 // TODO: Replace these examples with your actual exercises
-                list.add(new Exercise("Burpees", crunchReps, "Keep Your Core Tight.", base + "strenght2.gif"));
-                list.add(new Exercise("Mountain Climbers", legRaiseReps, "Keep Your Hips Low.", base + "strength3.gif"));
-                list.add(new Exercise("Lunges", plankTime, "Keep Knees at 90 Degrees", base + "strength1.gif"));
-                list.add(new Exercise("Bicycle Crunches", bicycleReps, "Elbow to opposite knee.", base + "abs4.gif"));
+                list.add(new Exercise("Shoulder Taps", crunchReps, "Keep Your Core Tight.", base + "strength1.gif"));
+                list.add(new Exercise("Squats", legRaiseReps, "Keep Your Hips Low.", base + "strength3.gif"));
+                list.add(new Exercise("Russian Twists", plankTime, "Keep Knees at 90 Degrees", base + "strength4.gif"));
+                list.add(new Exercise("Reverse Lunges", bicycleReps, "Elbow to opposite knee.", base + "strength2.gif"));
                 // ... add your other 2 exercises
                 break;
             }
@@ -296,10 +296,10 @@ public class WorkoutScreen extends JPanel {
 
                 // 2. Add your REAL Abs exercises here
                 // TODO: Replace these examples with your actual exercises
-                list.add(new Exercise("Crunches", crunchReps, "Lift shoulders, not neck.", base + "abs5.gif"));
-                list.add(new Exercise("Lying Leg Raises", legRaiseReps, "Keep lower back flat.", base + "abs2.gif"));
-                list.add(new Exercise("Plank", plankTime, "Keep body straight.", base + "abs3.gif"));
-                list.add(new Exercise("Bicycle Crunches", bicycleReps, "Elbow to opposite knee.", base + "abs4.gif"));
+                list.add(new Exercise("Crunches", crunchReps, "Lift shoulders, not neck.", base + "str1.gif"));
+                list.add(new Exercise("Lying Leg Raises", legRaiseReps, "Keep lower back flat.", base + "str2.gif"));
+                list.add(new Exercise("Plank", plankTime, "Keep body straight.", base + "str3.gif"));
+                list.add(new Exercise("Bicycle Crunches", bicycleReps, "Elbow to opposite knee.", base + "str4.gif"));
                 // ... add your other 2 exercises
                 break;
             }// ... Add a 'case' for "Stretching", "Yoga", "Strength" ...

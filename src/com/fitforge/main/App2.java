@@ -24,85 +24,122 @@ public class App2 {
 
     public App2() {
         f = new JFrame("FitForge App");
-        f.setUndecorated(true);
+        f.setUndecorated(true);    //disable default window decorations
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(420, 750);
-        f.setLocationRelativeTo(null);
+        f.setLocationRelativeTo(null); //center the frame
         f.setResizable(false);
-        f.setBackground(new Color(0, 0, 0, 100));
+        f.setBackground(new Color(0, 0, 0, 0));
 
-        JLayeredPane layeredPane = new JLayeredPane();
-        f.setContentPane(layeredPane);
-
+        JLayeredPane layeredPane = new JLayeredPane(); // For layering phone frame over content
+        f.setContentPane(layeredPane); // Set layered pane as content pane
+        
         userManager = new UserManager();
-
         card = new CardLayout();
         mainPanel = new JPanel(card);
         mainPanel.setBounds(30, 20, 368, 717);
         mainPanel.setOpaque(false);
 
-        Image img1 = null, img2 = null, img3 = null, img4 = null, img5 = null;
+        Image img1 = null, img2 = null, img3 = null, img5 = null; // img4 = null,
+
+        //copy pasted
         try {
+
             img1 = ImageIO.read(new File("src/resources/images/first.jpg"));
+
             img2 = ImageIO.read(new File("src/resources/images/second.jpg"));
+
             img3 = ImageIO.read(new File("src/resources/images/third.jpg"));
-            img4 = ImageIO.read(new File("src/resources/images/four.jpg"));
+
+            // img4 = ImageIO.read(new File("src/resources/images/four.jpg"));
             img5 = ImageIO.read(new File("src/resources/images/fifth.png"));
+
         } catch (IOException e) {
+
             System.out.println("Error loading image: " + e.getMessage());
+
         }
 
         Screen1 screen1 = new Screen1(img1, card, mainPanel);
+
         Screen2 screen2 = new Screen2(img2, card, mainPanel);
+
         Screen3 screen3 = new Screen3(img3, card, mainPanel);
-        Screen4 screen4 = new Screen4(img4, card, mainPanel);
+
+        // Screen4 screen4 = new Screen4(img4, card, mainPanel);
         Screen5 screen5 = new Screen5(img5, card, mainPanel);
 
         LoginPanel loginPanel = new LoginPanel(userManager, card, mainPanel);
+
         RegisterPanel registerPanel = new RegisterPanel(userManager, card, mainPanel);
+
         UserDetailsPanel userDetailsPanel = new UserDetailsPanel(card, mainPanel);
 
         homeScreen = new HomeScreen(this);
+
         workoutScreen = new WorkoutScreen(this);
 
         levelSelectionPanel = new LevelSelectionPanel(this);
 
         mainPanel.add(screen1, "screen1");
+
         mainPanel.add(screen2, "screen2");
+
         mainPanel.add(screen3, "screen3");
-        mainPanel.add(screen4, "screen4");
+
+        // mainPanel.add(screen4, "screen4");
         mainPanel.add(screen5, "screen5");
+
         mainPanel.add(loginPanel, "login");
+
         mainPanel.add(registerPanel, "register");
+
         mainPanel.add(userDetailsPanel, "dashboard");
+
         mainPanel.add(homeScreen, "home");
+
         mainPanel.add(workoutScreen, "workout");
+
         mainPanel.add(levelSelectionPanel, "levelSelect");
 
         PhonePanel phonePanel = new PhonePanel();
+
         phonePanel.setBounds(0, 0, 420, 750);
 
         layeredPane.add(mainPanel, JLayeredPane.DEFAULT_LAYER);
+
         layeredPane.add(phonePanel, JLayeredPane.PALETTE_LAYER);
 
         f.setVisible(true);
+
     }
 
     public void showLevelSelector(String bodyPart) {
+
         levelSelectionPanel.setBodyPart(bodyPart);
+
         card.show(mainPanel, "levelSelect");
+
     }
 
     public void openWorkoutWindow(String bodyPart, String level) {
+
         workoutScreen.loadWorkout(bodyPart, level);
+
         card.show(mainPanel, "workout");
+
     }
 
     public void backToHome() {
+
         card.show(mainPanel, "home");
+
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new App2());  // run the gui in the event-dispatching thread (EDT)
+
+        SwingUtilities.invokeLater(() -> new App2());  // this will run the gui in the event-dispatching thread (EDT)
+
     }
+
 }

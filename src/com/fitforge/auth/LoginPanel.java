@@ -4,25 +4,24 @@ import com.fitforge.model.UserManager;
 import java.awt.*;
 import javax.swing.*;
 
-public class LoginPanel extends JPanel { // Must be JPanel
+public class LoginPanel extends JPanel { 
 
     private final UserManager userManager;
     private final CardLayout card;
-    private final JPanel mainPanel; // Must be JPanel
+    private final JPanel mainPanel; 
 
-    public LoginPanel(UserManager userManager, CardLayout card, JPanel mainPanel) { // Must be JPanel
+    public LoginPanel(UserManager userManager, CardLayout card, JPanel mainPanel) { 
         this.userManager = userManager;
         this.card = card;
         this.mainPanel = mainPanel;
         setLayout(null);
         setBackground(new Color(69, 51, 181));
 
-        JLabel titleLabel = new JLabel("LOGIN", JLabel.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 28));
-        titleLabel.setForeground(Color.WHITE);
-        titleLabel.setBounds(50, 100, 260, 50);
-        add(titleLabel);
-
+        JLabel title = new JLabel("LOGIN", JLabel.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 28));
+        title.setForeground(Color.WHITE);
+        title.setBounds(50, 100, 260, 50);
+        add(title);
         JLabel userLabel = new JLabel("Username:");
         userLabel.setFont(new Font("Arial", Font.BOLD, 14));
         userLabel.setForeground(Color.WHITE);
@@ -35,11 +34,11 @@ public class LoginPanel extends JPanel { // Must be JPanel
         userField.setBackground(new Color(240, 240, 240));
         add(userField);
 
-        JLabel passLabel = new JLabel("Password:");
-        passLabel.setFont(new Font("Arial", Font.BOLD, 14));
-        passLabel.setForeground(Color.WHITE);
-        passLabel.setBounds(50, 250, 80, 25);
-        add(passLabel);
+        JLabel pass = new JLabel("Password:");
+        pass.setFont(new Font("Arial", Font.BOLD, 14));
+        pass.setForeground(Color.WHITE);
+        pass.setBounds(50, 250, 80, 25);
+        add(pass);
 
         JPasswordField passField = new JPasswordField();
         passField.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -81,7 +80,7 @@ public class LoginPanel extends JPanel { // Must be JPanel
             }
         });
         add(loginButton);
-
+        
         JButton registerButton = new JButton("Register");
         registerButton.setFont(new Font("Arial", Font.BOLD, 14));
         registerButton.setBounds(180, 365, 100, 35);

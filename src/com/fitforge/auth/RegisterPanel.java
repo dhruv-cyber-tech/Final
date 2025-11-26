@@ -4,13 +4,13 @@ import com.fitforge.model.UserManager;
 import java.awt.*;
 import javax.swing.*;
 
-public class RegisterPanel extends JPanel { // Must be JPanel
+public class RegisterPanel extends JPanel { 
 
     private final UserManager userManager;
     private final CardLayout card;
-    private final JPanel mainPanel; // Must be JPanel
+    private final JPanel mainPanel; 
 
-    public RegisterPanel(UserManager userManager, CardLayout card, JPanel mainPanel) { // Must be JPanel
+    public RegisterPanel(UserManager userManager, CardLayout card, JPanel mainPanel) { 
         this.userManager = userManager;
         this.card = card;
         this.mainPanel = mainPanel;

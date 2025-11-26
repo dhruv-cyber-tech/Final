@@ -41,7 +41,7 @@ public class Screen3 extends JPanel {
         next3.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                card.show(mainPanel, "screen4");
+                card.show(mainPanel, "screen5");
             }
         });
         add(next3);

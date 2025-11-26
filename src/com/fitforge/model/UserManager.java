@@ -8,12 +8,12 @@ public class UserManager {
     private int userCount;
 
     public UserManager() {
-        // Fixed size arrays (we can increase if needed)
+        
         usernames = new String[20];
         passwords = new String[20];
         userCount = 0;
 
-        // Default demo users
+        
         usernames[userCount] = "dhruv";
         passwords[userCount++] = "dhruv123";
 
@@ -55,14 +55,6 @@ public class UserManager {
             userCount++;
         } else {
             System.out.println("User list is full!");
-        }
-    }
-
-    // Optional: for debugging
-    public void printAllUsers() {
-        System.out.println("Registered Users:");
-        for (int i = 0; i < userCount; i++) {
-            System.out.println(" - " + usernames[i]);
         }
     }
 }
