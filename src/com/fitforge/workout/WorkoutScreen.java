@@ -144,9 +144,9 @@ public class WorkoutScreen extends JPanel {
                 }
 
                 list.add(new Exercise("Jumping Jacks", jjReps, "Keep your neck relaxed.", base + "chest1.gif"));
-                list.add(new Exercise("Leg Raise", lrReps, "Do not lift lower back off floor.", base + "chest2.gif"));
-                list.add(new Exercise("Plank", plankTime, "Keep body straight.", base + "chest3.gif"));
-                list.add(new Exercise("Mountain Climbers", mcReps, "Engage core muscles.", base + "chest4.gif"));
+                list.add(new Exercise("Incline Pushups", lrReps, "Do not lift lower back off floor.", base + "chest2-resize.gif"));
+                list.add(new Exercise("Push Ups", plankTime, "Keep body straight.", base + "chest4.gif"));
+                list.add(new Exercise("Bench Dips", mcReps, "Engage core muscles.", base + "benchDips.gif"));
                 break;
             }
 
@@ -174,10 +174,10 @@ public class WorkoutScreen extends JPanel {
 
                 // 2. Add your REAL Abs exercises here
                 // TODO: Replace these examples with your actual exercises
-                list.add(new Exercise("Crunches", crunchReps, "Lift shoulders, not neck.", base + "abs5.gif"));
-                list.add(new Exercise("Lying Leg Raises", legRaiseReps, "Keep lower back flat.", base + "abs2.gif"));
+                list.add(new Exercise("Crunches", crunchReps, "Lift shoulders, not neck.", base + "abs2.gif"));
+                list.add(new Exercise("Lying Leg Raises", legRaiseReps, "Keep lower back flat.", base + "legRaise.gif"));
                 list.add(new Exercise("Plank", plankTime, "Keep body straight.", base + "abs3.gif"));
-                list.add(new Exercise("Bicycle Crunches", bicycleReps, "Elbow to opposite knee.", base + "abs1.gif"));
+                list.add(new Exercise("Bicycle Crunches", bicycleReps, "Elbow to opposite knee.", base + "bicycleCrunches.gif"));
                 // ... add your other 2 exercises
                 break;
             }
