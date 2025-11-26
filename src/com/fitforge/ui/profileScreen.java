@@ -114,12 +114,13 @@ public class profileScreen extends JPanel {
     // This method is called by App2 right before showing this screen
     public void refreshProfile() {
         if (userData != null) {
+            nameLabel.setText("Name: " + userData.getName());
             ageLabel.setText("Age: " + userData.getAge());
             genderLabel.setText("Gender: " + userData.getGender());
             weightLabel.setText("Weight: " + userData.getWeight() + " kg");
             heightLabel.setText("Height: " + userData.getHeight() + " cm");
             goalLabel.setText("Goal: " + userData.getGoal());
-            nameLabel.setText("Name: " + userData.getName());
+            
             
             calculateBMI();
         }
