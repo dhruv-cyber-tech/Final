@@ -42,9 +42,9 @@ public class HomeScreen extends JPanel {
         BufferedImage cardioImg = loadImage("yoga.png");
 
         cardsPanel.add(new ImageCardPanel(app, "Chest Training", chestImg));
-        cardsPanel.add(new ImageCardPanel(app, "Stretching", legsImg));
-        cardsPanel.add(new ImageCardPanel(app, "Back Training", backImg));
         cardsPanel.add(new ImageCardPanel(app, "Strength", armsImg));
+        cardsPanel.add(new ImageCardPanel(app, "Back Training", backImg));
+       cardsPanel.add(new ImageCardPanel(app, "Stretching", legsImg));
         cardsPanel.add(new ImageCardPanel(app, "Abs Training", absImg));
         cardsPanel.add(new ImageCardPanel(app, "Yoga", cardioImg));
 
